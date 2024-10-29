@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/style.css">
+<style>
+  .timeline_image {
+    object-fit: cover;
+    width: 250px;
+  }
+</style>
+
+<title>Style Bake</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+
+    <div class="sidebar">
+  <li><a href="#intro">9/12/24 : Prototype Development</a></li>
+  <li><a href="#intro">9/12/24 : Prototype Development</a></li>
+</div>
+
+<div class="everything">
+
+<img src="stylebake.PNG" alt="Style Bake">
+
+<h1>Style Bake</h1>
+    <p> A tool I developed for 
+    quickly creating 
+    interesting textures for 
+    3d objects. By 
+    manipulating decals 
+    through a range of 
+    parameters users can 
+    control aspects like size, 
+    rotation and layering to 
+    achieve customized 
+    textures that enhance 
+    the detail and visual 
+    appeal of their 3d 
+    models with ease.
+    </p>
+    <a href="">Download</a>
+
+<hr>
+<div id="Prototype Development">
+    <h1>9/12/24 - Prototype Development</h1>
+    <h2> Inspiration </h2>
+
+    <div style="display:flex; flex-direction: row;">
+        <p> 
+        In the past I’ve built many small tools for game projects, mostly for editing levels or managing art assets but I 
+        wanted to make somethnig not just for a speci c game but a tool that would be useful to a more general 
+        audience but I wasn’t sure what that would be. An idea came when I was working on a prototype and tasked 
+        with creating buildings in a paper cut out style inspired by chaotic gra ti. So I setup a system that used 
+        blender geometry nodes and a small python script that then went into a substance designer setup to 
+        generate a texture and mesh. As I developed these tools further for the project I found they were quite 
+        exible in achieving a range of di erent styles, however due to how I had set it up it was di cult to 
+        experiment and make changes quickly. Also if the project had been expanded the setup would have been 
+        di cult for anyone else to use but I thought it might be something that other people would nd useful so I 
+        decided to expand it into it’s own dedicated tool.
+        Initially I had also wanted to do this as a unity plugin however I had ran into issues in the past when trying to 
+        access unitys baked ao for my own textures and I thought it might limit the usefulness by being tied to one 
+        engine. The other main reason was that I wanted to focus on design rather than getting caught up in unity 
+        speci c details.
+        One of the main problems with this type of texturing is that each object needs it’s own texture, this isn’t so 
+        bad for characters but generally environments try to t multiple objects on the same texture using trim or 
+        atlases.  Early on I experimented with doing the scattering in engine using a shader technique called texture 
+        bombing (https://developer.nvidia.com/gpugems/gpugems/part-iii-materials/chapter-20-texture-bombing). 
+        I was able to achieve a similar looking result through the shader which meant that each object didn’t need a 
+        separate texture, and the resolution was only limited by the size of the decal meaning you could have very 
+        dense patterns that were still perfectly crisp when you get close to them. Unfortunately this approached 
+        introduced many limitations including, the shader getting exponentially more expensive with larger decal 
+        sizes, supporting non square textures would have been a lot of extra work and the approach would have 
+        been di cult to turn into something general purpose since di erent features often required completely 
+        di erent shader setups. I would probably look further into this though if attempting to do a large game with 
+        similar texturing techniques.
+        </p>
+
+        <div>
+            <img src="images/reference_3.webp" width="5000">
+            <p class ="caption">Obduction art tools</p>
+            <img src="images/reference_1.webp">
+            <img src="images/reference_2.webp">
+        </div>
+
+    </div>
+
+    <h2>Development</h2>
+
+    <div style = "display: grid; grid-template-columns: repeat(3, 33.3%); grid-template-rows: repeat(3, auto); grid-gap: 5px;">
+        <figure class=”gallery__item" style="grid-column-start:1;">
+            <img src="images/development_1.webp">
+            <p>
+            The first few weeks were spent getting a rough version of the software 
+            together as quickly as possible. I started by getting a mesh that you could 
+            pan around and view from different angles and then I got decals working 
+            by drawing objects to a render texture that was then used for the material 
+            on the mesh.  At rst I was just picking random positions for the decals but 
+            I remembered that I could use blue noise to make the scattering much 
+            more appealing. I followed a good video by sebastian lague to get that 
+            working https://www.youtube.com/watch?v=7WcmyxyFO7o. I knew I 
+            wanted baked light to somehow inuence the properties of the decals but 
+            I wasn’t sure how to approach that yet so I just baked some textures in 
+            substance painter for my example scene so that I could start 
+            experimenting without having to get baked lighting working. The next 
+            thing to do was get some way of editing the properties, up until this point I 
+            had just been testing things in engine. I had encountered issues with other 
+            ui systems in the past and wanted to try something new so I decided on 
+            using ImGui as the ui library for the project. It took a couple days to get 
+            used to but eventually I got a basic layout with some sliders that  I could 
+            use to tweak the decal settings, and with that I had a basic version of the 
+            program obviously missing a lot of features but it allowed me to play 
+            around with the settings and showed that the idea might work.
+            </p>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:2;">
+            <img src="images/development_2.webp">
+            <p>
+            The next major step was getting some way of 
+            calculating the ambient occlussion maps in the 
+            software without having to bring in external 
+            textures I looked into a lot of different approaches 
+            for this and found and relatively easy method that 
+            allowed the textured to be rendered in a shader, 
+            however this then meant that it had to be read back 
+            from the shader to use the baked values in the 
+            decal placement code. Reading back from the gpu 
+            can be quite slow so I had to reduce the baked 
+            texture size alot so that it could work quickly. 
+            However this ended up not being much of an issues 
+            since it looks good with low resolution textures 
+            anway and I found that the noisier baked textures can 
+            even look better sometimes than perfectly smooth 
+            ones for this type of texturing. Now that I could 
+            bake the lightmap in engine I added the ability to 
+            change the mesh and images, aswell as more 
+            options for controlling how decals were rendered.
+            </p>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:3;">
+            <img src="images/development_3.webp">
+            <p>
+                The last 3 or so weeks were just spent polishing and rening the features. 
+            Although theres a bunch of things I want to add I thought it was important to 
+            get the core set of features to a polished state before moving on. Things like 
+            automatically updating images if they’re changed outside of the program, 
+            updating the preview image while your editing the path rather than just after 
+            you have committed lots of little things to make the program feel better to use. 
+            One thing that took much longer than expected was handling 3d models, the 
+            library I was initially using to import 3d models would occassionaly fail however 
+            there was no way to find out why it had failed which I felt made the program 
+            quite annoying to use as some models would work and others you would have 
+            to mess around with export settings to get them to load correctly. I searched for 
+            a while to nd another library that could give me exact information on why 
+            something had failed however I was unable to and something that meet my 
+            requirements. So I took some old code I had made to import obj files and 
+            cleaned it up so that gave precise errors if the mesh wasn’t triangulated etc. This 
+            does mean that only obj les are supported but I think it was worth the tradeo . 
+            I didn’t quite get everything as polished as I would have liked but overall I’m 
+            happy with tools so far and I think it’s pretty close to being actually usable.
+            </p>
+        </figure>
+    </div>
+
+    <h2>Settings Evolution</h2>
+
+    <p>
+        Each part of the software went through several iterations to get to something that was easy to use while still providing full control over the visual appearance.
+    </p>
+    <div style = "display: grid; grid-template-columns: repeat(5, 19.7%); grid-template-rows: repeat(3, auto); grid-gap: 5px;">
+        <figure class=”gallery__item" style="grid-column-start:1;">
+            <img src="images/evolution_1.webp">
+            <li>
+                The first working version of the 
+                software, just put every parameter in 
+                so I could start working out which 
+                were going to be most useful. This 
+                also including leaving in all the 
+                debug menus and displays.
+            </li>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:2;">
+            <img src="images/evolution_2.webp">
+            <li>
+                Simplified the count and and min 
+                radius properties from the first version 
+                into a single density value. 
+            </li>
+            <li>
+                Removed the bounce contribution and max bounces as it didn’t have much of an 
+                effect on the final baked occlusion this might become more important in the 
+                future but for now it just adding more confusion.
+            </li>
+            <li>
+                Got rid of a lot of the debug information such as how many samples had been rendered as I 
+                found that it was information that the user didn’t really need to care about.
+            </li>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:3;">
+            <img src="images/evolution_3.webp">
+            <li>
+                Changed the color properties to a single gradient which allowed for 
+                much more control over how the lightmap values mapped to color.
+            </li>
+            <li>
+                This was also the stage at which I made the lighting bake once at the 
+                start when a mesh is first loaded rather than every time after the 
+                density is changed which meant that you could freely change the 
+                density property without having to wait a few seconds for it to finish 
+                rendering. From the limited testing I did, people seemed to generally 
+                avoid editing the density I think mostly because it didn’t feel good to use.
+            </li>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:4;">
+            <img src="images/evolution_4.webp">
+            <li>
+                Moved to a system where properties can be either be mapped to a value or 
+                not inspired by unitys default particle system. This simplifed the size 
+                property as now it can be displayed as a single value.
+            </li>
+            <li>
+                Occlusion distance has been removed as it represented the maximum 
+                distance that light rays could travel similar to ao radius in a post processing 
+                setting. But now that each property is remapping the light texture anyway 
+                the range of values is not as important and so it is automatically set to be a 
+                reasonable value based on the size of the mesh.                
+            </li>
+            <li>
+                Turned density into a slider to better show the range of values.
+            </li>
+        </figure>
+
+        <figure class=”gallery__item" style="grid-column-start:5;">
+            <img src="images/evolution_5.webp">
+            <li>
+                Removed the numbers from the color picker, so that they only show up when 
+                your editing it which reduces the visual clutter.
+            </li>
+            <li>
+                Seperated the image controls into its own region aswell as giving it a black 
+                background to help it stand out more.
+            </li>
+        </figure>
+
+    </div>
+
+    <h2>Screenshots</h2>
+
+    <div style = "display: grid; grid-template-columns: repeat(1, 50%); grid-template-rows: repeat(3, auto); grid-gap: 5px;">
+    <figure class=”gallery__item" style="grid-column-start:1;">
+        <img src="images/screenshot_1.webp" class="gallery__img" alt="Image 1">
+    </figure>
+    <figure class=”gallery__item" style="grid-column-start:2;">
+        <img src="images/screenshot_2.webp" class="gallery__img" alt="Image 1">
+    </figure>
+    </div>
+    <div style="display:flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
+     <img class="timeline_image" src="images/example_1.webp" alt="1">
+      <img class="timeline_image" src="images/example_3.webp" alt="1">
+      <img class="timeline_image" src="images/example_4.webp" alt="1">
+        <img class="timeline_image" src="images/example_5.webp" alt="1">
+      <img class="timeline_image" src="images/example_6.webp" alt="1">
+      <img class="timeline_image" src="images/example_2.webp" alt="1">
+    </div>
+</div>
+
+<hr>
+<div id="Prototype Development">
+    <h1>9/12/24 - Prototype Development</h1>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,154 +1,249 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-
-    body { font: normal 15px "Avenir", sans-serif; margin-top:0px; margin-bottom:0px;}
-    .content {
-      position: relative;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
-    }
-li { margin-bottom:0px; }
-ul {margin-top:0px; margin-left:5px}
-p {margin-top:0px; margin-left:5px}
-h2 {
-		margin-top:0px; margin-bottom:0px;
-		color:rgb(255, 87, 34);
-}
-
-h4 { margin-top:0px; margin-bottom:0px;}
-	.flex_container {
-	  display: flex;
-	}
-	.flex_container > div {
-	  flex: 1; /*grow*/
-	}
- .image-large{
-     float: left;
-     border: 1px solid #E4DFDC;
-     padding: 9px;
-     margin-top: 10px;
-     margin-bottom: 10px;
-     cursor: pointer;
-     transition: all 0.2s ease-in;
-}
- .img-large{
-     margin-bottom: 10px;
-}
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<div class="content">
-<img src="image19.webp" width=100%>
-
-<h2> 02/10/23 15:50 : Perfect Planks </h2>
-<hr>
-<p>
-I challenged myself to create a realistic environment with only one mesh.
-
-What's more ubiquitous then planks
-
-This is the nicest looking slide so don’t get your expectations up
-
-I really like chaotic, messy architecture particularly when it's just created quickly to serve a particular purpose
-I don't really know why but to me this is beautiful. However I find that it’s quite difficult to approach scenes like this with traditional modular building techniques often you end up making large sections out of engine
-which becomes difficult to change later and they're not very reusable pieces and I wanted to try and see whether something more fine grain was viable and so I thought I'd start with the planks.
-
-The main thing that makes this possible is stretchy meshes
-Which basically just means scaling the uvs with the object
-The name comes from this GDC talk about Obductions art tools but they do a way more complicated thing, which is probably useful if you’re making like steel bits or whatever but for wood I don't think it's needed
-The setup is pretty easy you just need a standard mesh with trim style uvs. A seamless wood texture and then a couple nodes you might have to flip shit around depending on how the uvs are setup or whatever but it’s pretty simple and then you can just make your planks whatever scale you need and don't have to worry about your textures becoming stretched or two objects having different texel densities. And it cuts down on all the time spent searching if you've got a large set of assets, even if you have the perfect plank to fit an area you still have to find it whereas with this it just works everytime.
-
-And already with just that you can already get some nice scenes theses only took a few minutes to put together
-And they’re really fun to build because it's basically just cubes. you don’t have to unwrap it or break it into modular pieces you can just think about the shapes and how things connect etc. And this would probably be good enough for most scenes but if your using this heavily it can get a bit repetitive and look very uniform. So if you want the perfect planks you need to add variation.
-
-<h2> Variation </h2>
-
-The easiest way to get variation is by having a random value for each plank in the level
-Alot of people say to do this shit with the position to get a random value but it can look quite bad where there’s big sections with the same value and I’m sure there's probably ways to make it look better but that just seemed like a rabbit hole to me. Maybe something for next week
-So I just did it the lazy way with object position into noise
-If your doing this for foliage though you can just do the per instance random thing and your all good
-I really feel like this is something that unreal should be able to give you like an id or something but whatever, if anyone knows a better way let me know.
-
-And from there now that you have a random value per plank you can use that in a lerp to blend the texture with a color to make each plank a unique shade
-You can also add that value to the x of the uvs so that planks that are stacked next to each other don’t have obviously duplicate textures
-This isn’t a particularly good example but on textures with higher contrast this is much more noticeable
-Anything you can add to make it seem less repetitive without needing any additional work is great, like obviously you could make copies of the mesh and manually edit their uvs but we’re trying to make it look good quickly
-
-The shape needs to be varied aswell
-And as it turns out wood can bend sometimes, and often in these types of scenes the wood shouldn’t be perfect to begin with so it needs to be deformed
-And that can of course be done with world position offset you sample some noise so that there’s a random gradient along the length of the plank and then you can just put that straight into the offset
-Which is all you really need but it can be quite annoying to edit because the whole plank will wobble around and intersect with things when you try and move it
-So I just made a gradient using the local position where both the start and end were dark, and multiplied it that way only the bit in the middle gets moved.
-I found that just displacing it left and right was enough to create good looking variation, but you could get easily get as complicated as you want with implementing different types of bends
-
-And that looks like this
-You can play around with the scale of the noise and the intensity
-Obviously more subdivisions are gonna give a smoother bend
-At higher intensities you can achieve quite a stylized effect which I thought was cool but keeping it subtle works too
-I was surprised actually how much of an impact it made even when it wasn’t particularly noticeable
-
-Bonus stuff
-Putting gradients on anything makes it look better I don’t really know why, maybe because it fakes like occlusion or dirt or something
-But dishonored does it all the time and you can just use the same gradient from the bending stuff so I put that on top of the texture and it adds a lot.
-Putting the origin on one side of the plank rather than in the center makes it way easier to use because then you can put it on one side of a gap and scale to fit.
-This is more of a minor side note but a problem with the warping setup is that the bigger the mesh gets the more warped it’s gonna be, which is kind of the opposite of what you want to happen like realisticly the smaller sticks should be bending the most.
-To fix this you can do a little hack and remap the y scale so that past a certain size planks are no longer warped
-
-And from there you can sort of add on the normal techniques that you might use like
-Vertex painting to add painted or burnt or moldy areas
-Blending based on the world normal to have dirt or dust or whatever only on the tops of planks I didn't actually end up doing that because I think it looks kind of bad on flat surfaces
-
-And that's about it
-It’s a little weird to get used to because the planks constantly change when your moving them.
-but just being able to fix intersections between pieces or add new stuff easily is really nice
-I haven't looked into it too much performance wise but to me there's no obvious reason why it shouldn't be able to handle this.
-my general idea that I think is more interesting than any of the specifics techniques is that,
-alot of our environment techniques are very
-should be shifted to in engine work
-obviously you'll still need custom specific meshes, but those really make up a very small part of the scene
-
-</p>
-
-<div class="image-large">
- <img loading="lazy" class="img-large" src="image15.webp" width=100%>
+<div class="sidebar">
+  <ul>
+  <li><a href="#intro">Intro</a></li>
+  <li><a href="#variation">Variation</a></li>
+  <li><a href="#more">More</a></li>
+  <li><a href="#future">Future</a></li>
+  <li><a href="#result">Result</a></li>
+  </ul>
 </div>
 
-<div class="image-small">
- <img loading="lazy" class="img-small" src="image11.webp" width=100%>
+<div class="everything">
+  <img src="images/image19.webp" width=100%>
+
+  <h1> 02/10/24 : Perfect Planks </h1>
+
+  <hr>
+  <em>Originally presented as a talk</em>
+
+  <div id="intro">
+    <h2> Intro </h2>
+    <p>
+    I really like chaotic, messy architecture particularly when it's created quickly to serve a particular purpose
+    However I've found that it can be difficult to approach scenes like this with traditional modular building techniques, 
+    in the past I've often ended up making large sections out of engine which then become difficult to change later and they're not very reusable pieces and I wanted to try and see whether something more fine grain was viable and so I thought I'd start with the planks.
+
+    or you end up with bits that look repetitive
+
+    So one day I thought why not just make the planks directly in engine?
+    </p>
+
+    <img src="images/image13.webp" class="center">
+    <p class ="caption">Obduction art tools</p>
+
+    <p>
+    The main thing that makes this possible is stretchy meshes
+    Which basically just means scaling the uvs with the object
+    The name comes from this GDC talk about <a href="https://archive.org/details/GDC2016Anderson/page/n51/mode/2up">Building Obductions Art Tools</a> but they do a way more complicated thing, which is probably useful if you’re making like steel bits or whatever but for wood I don't think it's needed
+    The setup is pretty easy you just need a standard mesh with trim style uvs. A seamless wood texture and then a couple nodes you might have to flip shit around depending on how the uvs are setup or whatever but it’s pretty simple and then you can just make your planks whatever scale you need and don't have to worry about your textures becoming stretched or two objects having different texel densities. And it cuts down on all the time spent searching if you've got a large set of assets, even if you have the perfect plank to fit an area you still have to find it whereas with this it just works everytime.
+    </p>
+
+
+    <img src="images/image14.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 50%;">
+    <p class="caption">Trim Style UVS</p>
+    <img src="animations/image47.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 50%;">
+    <img src="images/image3.webp"  style = "display: block; margin-left: auto; margin-right: auto; width: 70%;">
+    <p class="caption">Basic Node Setup</p>
+
+    <img src="images/image18.webp" class="center">
+    <img src="images/image15.webp" class="center">
+
+    <p>
+    With just that you can already get some nice scenes theses only took a few minutes to put together
+    and they’re really fun to build because it's basically just scaling cubes and moving them around.
+    You don’t have to unwrap it or break it into modular pieces you can just think about the shapes and how things connect etc. And this would probably be good enough for most scenes but if your using this heavily it can get a bit repetitive and look very uniform. So if you want the perfect planks you need to add <em>variation</em>.
+    </p>
+  </div>
+
+  <div id="variation">
+    <h2> Variation </h2>
+
+    <img src="images/image5.webp" class="center">
+    <p class="caption">Random value from position node setup</p>
+
+    <p>
+      To achieve variation we need some way of getting a random value for each plank, the original Obduction talk uses a technique
+      where the axes are combined 
+
+    </p>
+
+    <img src="images/image11.webp" class="center">
+    <p class="caption">Random value from position example (showing obvious artifacts)</p>
+
+    <img src="images/image2.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 40%;">
+
+    <p>
+      The position axes combined into a single value are then used as the position to sample either a texture or procedural noise pattern to get
+      a more balanced set of values
+    </p>
+
+    <img src="images/image7.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 40%;">
+
+    <p>
+      Ideally this random value would already be something that the engine provides and it does but only for instanced meshes made with 
+      foliage tools or on an instance blueprint component
+      Let me know, if theres a way of working around this I'd be happy to hear it
+    </p>
+
+    <img src="images/image12.webp" class="center">
+    <p class="caption">Nicely distrubuted random values</p>
+
+    <p>
+      Now that we have a random value per plank theres a lot that can be done with it, by using the value as a mix parameter in a lerp 
+      it can control the blending with a color or even an alternate wood texture.
+    </p>
+
+    <img src="images/image39.webp" class="center">
+    <p class="caption">Color Variation</p>
+
+    <p>
+      Adding a random offset to the uvs of each plank is now trivial so planks that are stacked next to each other don’t 
+      have obviously duplicate textures this isn’t a particularly good example but on textures with higher contrast 
+      this is much more noticeable.
+    </p>
+
+    <img src="images/image40.webp" class="center">
+    <p class="caption">No UV Variation</p>
+    <img src="images/image42.webp" class="center">
+    <p class="caption">UV Variation</p>
+
+    <p>
+      The shape of the planks can be varied aswell of course, by sampling some noise along the length of the plank and then using that 
+      to offset vertices left or right based on an intensity value a warped appearance can be achieved.
+    </p>
+    <p>
+      However it can be quite annoying to edit because the whole plank will wobble 
+      around when moved making it difficult to line up precisely so I just made a gradient using the local position where both the 
+      start and end were a 0 value and multiplied it by the random offset, that way only the vertices in the middle get moved.
+    </p>
+
+    <img src="images/image16.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 50%;">
+    <p class ="caption">Gradient Mask</p>
+
+    <img src="animations/image44.webp" class="center">
+
+    <p>
+    You can tweak the scale of the noise and the intensity in the shader instance, 
+    obviously more subdivisions are gonna give a smoother bend.
+      I found that just displacing it left and right was enough to create good looking variation, but you could get 
+      easily get as complicated as you want with implementing different many types of wood bends.
+    </p>
+
+    <img src="images/image17.webp" class = "center">
+    <p class ="caption"> Different types of wood bends</p>
+  </div>
+
+  <div id="more">
+    <h2>More</h2>
+
+    <h3>Gradients</h3>
+    <p>
+    Putting gradients on anything makes it look better I don’t really know why, maybe because it fakes like occlusion or dirt or something
+    but dishonored does it all the time and you can just use the same gradient from the bending stuff so I put that on top of the texture and it adds a lot.
+    </p>
+
+    <img src="images/image26.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 50%;">
+
+
+    <p>
+      Putting the origin on one side of the plank rather than in the center makes it way easier to use because then you can put it on one side of a gap and scale to fit.
+      This is more of a minor side note but a problem with the warping setup is that the bigger the mesh gets the more warped it’s gonna be, which is kind of the opposite of what you want to happen like realisticly the smaller sticks should be bending the most.
+      To fix this you can do a little hack and remap the y scale so that past a certain size planks are no longer warped.
+    </p>
+
+    <img src="animations/image38.webp" class="center">
+
+    <p>
+      And from there you can sort of add on the normal techniques to break up repetition like vertex painting to add painted, burnt or moldy areas.
+    </p>
+
+    <img src="animations/image43.webp" class="center">
+
+    <p>
+      Aswell as blending based on the world normal to have dirt, dust etc only on the tops of planks, I didn't actually end up doing that because I think it looks kind of bad on flat surfaces, but maybe if you used the normal of the texture aswell it could look more convincing.
+    </p>
+
+    <img src="images/image24.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 50%;">
+  </div>
+
+  <div id="future">
+    <h2>Future</h2>
+    <p>This is mainly just a list for myself of things that might be worth looking into in the future to make this technique even more 
+      useful / realistic.</p>
+    <h3>Bevelled edges</h3>
+      <p>
+        It would be good to find a proper solution for how to keep the bevelled edges from being distorted at large scaling factors,
+        perhaps this could be done purely through a normal texture instead using something like 
+        <a href="https://archive.org/details/GDC2015Olsen2/page/n21/mode/2up"> ultimate trims </a> or maybe a 
+        vertex mask that holds vertices at a certain offset whilst still allowing them to scale.
+      </p>
+    <img src="animations/image45.webp" class="center">
+    <p class="caption">Bevels get stretched at large scales :(</p>
+
+
+    <h3>End caps</h3>
+      <p>
+        You could easily just use a different material so that the ends have a seperate texture but I 
+        think theres probably a nicer way of doing it that would allow for a soft transition aswell.
+      </p>
+
+    <img src="images/image33.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 30%;">
+    
+    <h3>Damage Decals</h3>
+    <p>
+      I’ve seen some cheap ways of scattering decals all within the material, texture bombing etc so I think it would be possible to add 
+      some randomized scratches or dents over top to add more detail.
+    </p>
+
+    <h3>Bolts</h3>
+    <p>
+      I feel like it might become too expensive to use a similar technique for bolts and nails, 
+    </p>
+  </div>
+
+  <div id="result">
+    <h2>Result</h2>
+
+    <p>
+      That's about it, creating scenes with dynamic objects like these can be a little weird to get used to because the 
+      planks constantly change when they're being moved around (another thing having consistent object random values would fix), 
+      but just being able to fix intersections between pieces or add new stuff easily is really nice. 
+    </p>
+     <!-- 
+      but I've found that it's more than made up for it by changing the way I think about constructing realistic environments. 
+      Typically when breaking down a reference, 
+      thinking about how best to split something up into reusable parts, to more of a focus on how materials would naturally intersect
+      and then resolving those intersections in engine as 
+      if you were to build something in reality.
+
+      Obviously this is less applicable to more rigid structures, 
+      
+      to resolve complex intersections between different objects
+    -->
+    <p>
+      Another less obvious impact of this type of construction is that if you create one object like a chair and then save it as
+      a prefab, blueprint etc then anytime you make a new chair that chair will be completely different to any others in the level. 
+    </p>
+
+    <p>
+      I haven't looked into it too much performance wise but to me there's no obvious reason why an engine shouldn't be able to 
+      handle lots of instances of the same mesh like this infact it might even be better than if they were constructed as one whole 
+      section because it could be more efficently culled, but this would definitly depend on how the engine was setup.
+    </p>
+
+
+    <img src="animations/image48.webp" style = "display: block; margin-left: auto; margin-right: auto; width: 70%;">
+    <img src="images/image31.webp" class = "center">
+    <img src="images/image41.webp" class = "center">
+  </div>
+
 </div>
-
-
-<div class="image-large">
- <img loading="lazy" class="img-large" src="image17.webp" width=100%>
- <p class ="caption caption-large"> Different types of wood bends</p>
-</div>
-
-<h2> Future </h2>
-<ul>
-<li>Better solution for bevelling edges</li>
-<li>End caps
-<img src="image33.webp" width=100>
-</li>
-<li><h4>Damage Decals </h4>
-<p> Using texture bombing or something similar, </p>
-</li>
-</ul>
-<p>
-Some future things that I think could make it better
-Maybe ultimate trims thing with the normals or somehow directly hold the vertices so that they’re always even
-How to handle end caps like you could easily just use a different material so that the ends can have a seperate texture but I think theyre's better ways of doing it.
-Theres a lot more object types that you could apply the techniques to. I'd quite like to try a level that's entirely made out of these dynamic pieces.
-I’ve seen some cheap ways of scattering textures all within the material so I think it would be possible to add some scratches or dents or whatever over top to add more detail
-</p>
-
-
-</div>
-
-
 </body>
 </html>

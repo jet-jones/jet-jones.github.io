@@ -7,13 +7,15 @@ body { padding:30px; padding-bottom:0px; overflow-x:hidden; }
 body { -webkit-text-size-adjust:none; -moz-text-size-adjust:none; text-size-adjust:none; }
 .everything { background:rgb(255,255,255); position:relative; margin-left: auto; margin-right: auto; max-width: 900px; padding:20px; }
 h1 { color:#db5f21; font-weight: bold; font-size:30px;  margin-top:10px; margin-bottom:10px; }
-h2 { color:#4d3c33;  margin-bottom:10px; font-size:25px; font-weight: bold; margin-top:15px; }
+h2 { color:#4d3c33;  margin-bottom:10px; font-size:23px; font-weight: bold; margin-top:15px; }
 h3 { color:#7a665c; font-size:20px; margin-top:10px}
-p  { margin-top:0px; margin-bottom:12px; font-size:16px;}
+p  { margin-top:10px; margin-bottom:12px; font-size:15px;}
 ul { list-style-type:none; margin-top:10px; margin-bottom:10px; }
-a  { color:#db5f21; font-style:italic; text-decoration:none; }
+a  { color:#db5f21; font-style:italic; text-decoration:none; font-size:15px;}
 a:hover { text-decoration:underline; }
-li { color:#000000; margin-bottom: 5px; margin-top:10px; font-size:15px}
+.big_link { color:#db5f21; font-style:italic; text-decoration:none; font-size:22px;}
+.big_link:hover { text-decoration:underline; }
+li { color:#000000; margin-bottom: 10px; margin-top:10px; margin-left:15px; font-size:15px}
 .good { color:#ff0; }
 .section { margin-top:26px; }
 .drop { margin-bottom:18px; }

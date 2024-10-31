@@ -25,9 +25,9 @@ Initially I had wanted each fight scene to take place on different parts of a sh
 from room to room and show the progression as you get closer to a boss etc. But due to technical limitations and scope 
 concerns this idea was scrapped in favour of each room being a seperate scene. By this point I already had the skeleton of a 
 ship blocked out so I split out parts of it to use as the basis for different scenes. Splitting up the scenes was 
-definitly the right choice though as it would would have been quite challenging to fit everything in the enclosed spaces under 
+definitly the right choice though as it would would have been quite challenging to fit everything in the enclosed spaces, under 
 the deck for example. By not being constrained to fit everything into the realistic proportions of a ship 
-meant I could exaggerate the size of things much further when needed which ultimately led to a much nicer composition.
+meant I could exaggerate the size of things much further when needed which ultimately led to much nicer looking compositions.
 </p>
 </div>
 <div>
@@ -41,23 +41,14 @@ meant I could exaggerate the size of things much further when needed which ultim
     <img src="images_boats/boat_2.webp" width=32% style="object-fit: cover;">
     <img src="images_boats/boat_3.webp" width=32% style="object-fit: cover;">
 </div>
-
 <p>
-During the ship development I learnt alot about how they work and the different parts
-at some point I would like to return to making a full 3d boat, perhaps in a more realistic style.
+Props used a very standard trim workflow, but the architecural bits of the ship were created as a single piece
+in the modelling software and imported as one mesh, 
+once the camera was aligned to match the game I could quickly block out the walls and add any
+additional geometry much faster than if it had been constructed from modular pieces in engine, which 
+allowed the backgrounds to have a more organic range of shapes, wood carvings etc.
 </p>
 
-<p>
-I tried out some different techniques for making the lighting look more painterly to match the 2d characters,
-but found they were often more distracting then the more realistic lighting and didn't allow for animation.
-I still tried to capture some of the painted look in the texturing but it was probably too subtle.
-</p>
-
-<div style="display: flex; justify-content: center; ">
-    <img src="images_boats/lighting_2.webp" width=33% style="object-fit: cover;">
-    <img src="images_boats/lighting_3.webp" width=33% style="object-fit: cover;">
-    <img src="images_boats/lighting_1.webp" width=33% style="object-fit: cover;">
-</div>
 
 <div style="display: flex; justify-content: center; ">
     <img src="images_boats/prop_1.webp" width=25% style="object-fit: cover;">
@@ -67,12 +58,20 @@ I still tried to capture some of the painted look in the texturing but it was pr
 </div>
 
 <p>
-Props used a very standard trim workflow, but the actual architecural bits were created as a single piece
-in the modelling software and imported as one mesh, 
-once the camera was aligned to match the game I could quickly block out the walls and any
-additional geometry much faster than if it had been constructed from modular pieces in engine, 
-and allowed the backgrounds to have a wider range of shapes, wood carvings etc.
+I thought having realistic lighting might clash with the characters so 
+I experimented with some different techniques for making the lighting look more painterly. The most promising approach was to
+use to a second uv channel with lightmap uvs to bake out the lighting into texture and then manually paint over it.
+However I just couldn't get this to look good. Perhaps because it was just a generic blend over top of the trim textures, the lighting 
+never felt attached to the materials of the scene. I feel like this is probably why 
+scenes of this size in other games would just be fully handpainted, but due to the time constraints of the 
+project that wouldn't have been practical.
 </p>
+
+<div style="display: flex; justify-content: center; ">
+    <img src="images_boats/lighting_2.webp" width=33% style="object-fit: cover;">
+    <img src="images_boats/lighting_3.webp" width=33% style="object-fit: cover;">
+    <img src="images_boats/lighting_1.webp" width=33% style="object-fit: cover;">
+</div>
 
 <div style="display: flex; justify-content: center; align-items:flex-start;">
 <img src="images_boats/screenshot_3.webp" width="50%">
@@ -86,6 +85,7 @@ Luckily there were other artists on the team who were able to help out with the 
 textures, like the paintings and stained glass window but I still feel like the textures removed 
 a lot of the appeal from the final prototype.
 </p>
+
 <div style="display: flex; justify-content: center; align-items:flex-start;">
 <img src="images_boats/screenshot_1.webp" width="50%">
 <img src="images_boats/screenshot_2.webp" width ="50%">

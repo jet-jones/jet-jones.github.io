@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="everything">
+
+<h1> Plant Game</h1>
+
+<h2>Controls</h2>
+<p>
+Mouse to look around
+WASD to move
+Space to jump
+E to interact with objects
+M to open the map
+Right click to place plants
+1, 2, 3 … to select inventory slots
+F1 to enable the commentary nodes
+</p>
+
+<a href="https://jet-j.itch.io/plant-game" class="big_link">Download (has commentary)</a>
+
+<h2>Development</h2>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_Wj4UbMMrzs?si=ni2-ZdmWGZmGw1Ky" allowfullscreen></iframe>
+
+<div style="display: flex; align-items: flex-start; justify-content: center;">
+<p>
+I’d made a system a while ago for doing 3d tile-based games in unreal but never ended 
+up using it for anything, I had also realized that I could make levels quickly with the 
+cube grid modelling tools that I had enjoyed using last time if I found a way to convert 
+them to tiles. Since the brief was so open, forcing it to be something tile based helped to 
+restrict the prototyping phase. I started with some early experimentation with moving 
+around very large tiles, but this was too similar to another game I’d made.  
+Eventually the prototypes developed 
+into more of a Spelunky type thing, 
+where there’s a bunch of objects with 
+unique properties and you use items 
+on the objects in different ways to get 
+coins and complete the level. I tried a 
+bunch of different stuff here but was 
+struggling to make the interactions 
+interesting without very specific 
+setups. I think it’s just because I 
+wasn’t particularly used to this type 
+of design, randomizing the levels 
+earlier on might have helped to have interesting combinations arising naturally rather 
+than hand placing everything. I would still like to try a game like this at some point, but 
+it was already halfway through the term, so I decided to switch to something I was more 
+familiar with. 
+One of the item types I developed for the Spelunky prototype was a fungus that would 
+slowly grow to fill the space, I then made more versions of the same object that grew in 
+lines, or a flat plane and I was finding it fun 
+to just move around on these dynamic 
+structures that you could place anywhere. So, 
+I took the plants into a new project and got 
+rid of everything else except the inventory 
+system and started trying to make interesting 
+obstacle courses to navigate around   
+This soon turned into more puzzly kinds of 
+levels where you must combine 2 or 3 plants 
+in a more specific configuration to get across 
+a gap. A lot of the first ones I found were 
+quite complicated but eventually I had a set 
+of 15ish pretty fun levels with a nice range of 
+difficulties.  
+I then started to combine them into a shared 
+open environment which introduced a bunch 
+of challenges, primarily ensuring that the 
+player couldn’t easily cheat their way out of 
+the level by stacking plants on top of other 
+plants. At first, I tried a decay system where 
+plants would eventually disappear after a few 
+seconds, but it added unnecessary timing to 
+the challenges and the seeds had to be on a 
+timer as well. It also required things to be 
+spread out more so that you couldn’t grab 
+plants from one section and use them in 
+other while the placed plants were still 
+decaying. After several other ideas, I decided 
+on the inventory approach. I’m still not 
+entirely happy with it but it was the least bad 
+option.
+</p>
+<div>
+<img src="images/spelunky.webp" width="3000px">
+<img src="images/levels_early.webp" width="3000px">
+<img src="images/levels_later.webp" width="3000px">
+</div>
+</div>
+
+<hr>
+
+<h1>Water Game</h1>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qvNZXB0HGSQ?si=Ixr_a6-mhwLC9pU0" allowfullscreen></iframe>
+
+<hr>
+
+<h1>Fibrous</h1>
+<div style="display: flex; justify-content: space-between;">
+    <div>
+    <p>
+        Made for a 48 hour game jam in 2022, the theme was roots.
+    </p>
+    <p>
+        <a href="https://jet-j.itch.io/fibrous">Download Here</a>
+    </p>
+    </div>
+    <video src="images/fibrous_gameplay.webm" autoplay loop width="400px"></video>
+</div>
+
+</div>
+
+</body>
+</html>

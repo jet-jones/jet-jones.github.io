@@ -65,6 +65,11 @@ allowed the backgrounds to have a more organic range of shapes, wood carvings et
     <img src="images_boats/prop_4.webp" width=25% style="object-fit: cover;">
 </div>
 
+<div style="display: flex; justify-content: center; ">
+    <video autoplay loop src="images_boats/boat_video.webm" width="470px"></video>
+    <video autoplay loop src="images_boats/waves_animation.webm" width="440px"></video>
+</div>
+
 <p>
 I thought having realistic lighting might clash with the characters so 
 I experimented with some different techniques for making the lighting look more painterly. The most promising approach was to
@@ -166,6 +171,14 @@ majority of the city.
 <hr>
 
 <h1>Plants</h1>
+
+<p>
+I worked on a group project that was a tile based puzzle game about growing plants.  I was responsible for the development of most of the plant growth effects in the game, I modelled and developed several shader effects to animate the growth of plants. 
+Background plants used a simple threshold of the uvs to control the opacity and the displacement. 
+For the main tiles I used a combination of pivot baking and regular scaling to achieve the effect.
+The plant meshes were modelled in blender. I couldn't find a plugin that baked pivot data I wanted so I made a quick modification to the blender pivot painter addon to add hierarchy indexes.
+A simple geo nodes setup was used to scatter the flowers and create a set of variations.
+</p>
 
 <div style="display: flex; justify-content: center; align-items:center; flex-wrap:wrap;">
 <img src="images_plants/level.webp" width="400px">

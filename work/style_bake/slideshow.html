@@ -16,13 +16,13 @@
 		body { padding:30px; padding-bottom:0px; overflow-x:hidden; }
 		body { -webkit-text-size-adjust:none; -moz-text-size-adjust:none; text-size-adjust:none; }
 		h1 { margin-bottom:10px; font-weight: bold; font-size:45px;  }
-		h2 { color:#999; margin-bottom:16px; font-weight: normal; font-size:11px; }
+		h2 { color:#999; margin-bottom:16px; font-weight: normal; font-size:25px; }
 		p  { margin-top:12px; margin-bottom:12px; font-size: 20px}
 		ul { list-style-type:none; margin-left: 70px; margin-top:10px; margin-bottom:10px; }
 		a  { color:#fff; font-weight:bold; text-decoration:none; }
 		a:hover { text-decoration:underline; }
 		h3 { color:#999; font-size:13px; font-weight:normal; position:absolute; margin-left:30px; }
-		li { color:#999; margin-bottom: 2px; }
+		li { color:#3f3939; margin-bottom: 2px; font-size:30px}
 		.good { color:#ff0; }
 		.dead { color:#999; }
 		.dead:hover {text-decoration: none;}
@@ -41,170 +41,225 @@
 			<div class="slides">
 				<section>
 					<h1 style="color: black">A bunch of random things I learned while trying to make an art tool</h1>
+					<h2 style="color: black">Jet Jones</h1>
 					<aside class="notes">First slide!</aside>
 				</section>
 				<section>
 					<img src="stylebake.PNG" width="100%">
 					<h1>Style Bake</h1>
 					<aside class="notes">
-						This is style bake a tool I've been working on for the past couple months	
+						This is style bake a tool I've been working on for the past couple months
 					</aside>
 				</section>
 				<section>
-					<div style="display:flex; align-items: center; align-content: center;">
-						<img src="images/example_1.webp" width="20%">
-						<img src="images/example_3.webp" width="20%">
+					<div style="display:flex; align-items: center; align-content: center; justify-content: space-around;">
+						<img src="images/example_1.webp" style="padding:3px" height="300px">
+						<img src="images/drawing_demo.webp" style="padding:3px" height="300px">
+						<img src="images/example_3.webp" style="padding:3px" height="300px">
 					</div>
 					<aside class="notes">
-						for making textures like this
-						Certainly not practical but I feel like it's a good base to learn a bunch 
-						of stuff and experiment
+						It generates weird patterny textures like this.
+						There isn't really a specific use case at this point, but it's been a good base to 
+						learn a bunch of stuff about tools and experiment with some new ideas.
+						And if you've got any ideas 
 					</aside>
 				</section>
+
 				<section>
 					<h1>Demo</h1>
 				</section>
 
-
-<!--
-	This idea of like a "front end"	and a "back end" shouldn't exist
-	these are very technical decisions that still need to be informed and constrained by the user 
-
-
-
--->
-
-
 <!-- BLUE NOISE -->
-                <section>
-					<h1>Random</h1>	
-					<img src="slideshow_images/bunny_samples1.png">
-					<aside class="notes">yuck, like i can barely look at it</aside>
-				</section>
-                <section>
-					<h1>Poisson Disk, Blue Noise Etc</h1>
-					<img src="slideshow_images/bunny_samples2.png">
-					<aside class="notes">compared to these points that evenly cover the space
-							no points are too close together, or too far apart </aside>
+				<section>
+					<img src="images/example_2.webp" style="padding:3px" height="500px">
+					<h1>Points</h1>	
+					<p>and a brief overview of some scattering techniques</p>
+					<aside class="notes">
+						One of the first things I looked into deeply was,
+						determining a good algorithm to drive the placement of points.
+					</aside>
 				</section>
 
 				<section>
-					<h1>Dart throwing</h1>
-					<iframe width="30%" height="500" frameborder="0" style="{{background:" "white"}}="" src="https://observablehq.com/embed/@kbravh/a-study-in-poisson?cells=viewof+replay%2CdartThrowingChart"></iframe>
+					<h1>Stippling / Dithering?</h1>	
+					<img src="slideshow_images/stippling.webp" width="40%">
+					<img src="slideshow_images/vstippling.png" width="60%">
 					<aside class="notes">
-						So obviously we want this nice distribution of points and 
+						The first thing I thought of was some kind of stippled / dithering algorithm, 
+						you could bias point density more toward the crevice and highlights and less on big flat surfaces.
+						and it still looks pretty good even at low densities 
+					</aside>
+				</section>
+
+				<section>
+					<img src="slideshow_images/ao_diagram.png" width="40%">
+					<h1>Sampling per decal</h1>
+					<aside class="notes">
+						But one of the things I was sort of stuck on at the start was that each point would sample
+						it's own lighting value,  
+						and it seemed kind of weird to me have a seperate process baking an ao map that determined the
+						position but then also each point would be rendering their own lighting values. 
+						I wanted something simpler to begin with so I just decided to start with a good even 
+						sampling of the surface
+					</aside>
+				</section>
+				
+				<section>
+					<img src="slideshow_images/bunny_samples1.png">
+					<aside class="notes">
+						The most obvious thing is just a random sampling, which isn't ideal. 
+						Theres big clusters of points and gaps where it feels like there should be more points
+						not very pleasing to look at.
+					</aside>
+					<h1>Random</h1>
+				</section>
+
+				<section>
+					<img src="slideshow_images/bunny_samples2.png">
+					<h1>Blue Noise, Uniform, Gaussian, Poisson Etc</h1>
+					<aside class="notes">
+						but this is an art program so we want something that actually looks good.
+						this is blue noise or uniform distribution or gaussian even though its not really gaussian
+						but compared to the random these points evenly cover the space
+						no points are too close together, or too far apart 
+						</aside>
+				</section>
+
+				<section>
+					<iframe width="30%" height="500" frameborder="0" style="background: white" src="https://observablehq.com/embed/@kbravh/a-study-in-poisson?cells=viewof+replay%2CdartThrowingChart"></iframe>
+					<h1>Dart throwing</h1>
+					<aside class="notes">
+						So obviously we want this nice distribution and 
 						one of the easiest way to go about generating this is just to pick a random point
 						and if it's too close to any existing points remove it then repeat.
 					</aside>
 				</section>
 
 				<section>
+					<img src="slideshow_images/dart_throwing_performance.png">
+					<aside class="notes">
+						But this can become kind of slow because as points are added it becomes less and less likely that a 
+						new point is going to spawn in an empty spot. To achieve complete coverage of an area the algorithm reaches
+						a point where it's doing thousands of tests just to find a single empty spot.
+						and it can be hard to determine when this process is finished. 
+					</aside>
+				</section>
+
+				<section>
+					<img src="slideshow_images/poisson-disc-sampling.gif" width="650px">
 					<h1>Disk Sampling</h1>
 					<aside class="notes">
+						Disk sampling is similar but instead of picking a random position you pick points in a radius 
+						around existing points, in this sort of growing wavefront
+						and the advantage of this is that it will grow at a consistent speed until the space is completly
+						filled.
 					</aside>
-				</section>
-
-				<section>
-					<h1>Other Ideas</h1>
-					<aside class="notes">
-						- Can't pregenerate because the density needs to be variable
-						Could possibly split it into multiple chunks and run on seperate threads and then do a merge pass 
-						but then when would the merging be done after the chunks are finished?
-
-					</aside>
-				</section>
-
-				<section>
-					<h1>Other Ideas</h1>
 				</section>
 
 				<section>
 					<img src="slideshow_images/slow_poisson.webp">
 					<aside class="notes"> 
-						And that's what that looks like	
-						It's not horrible, but it's certainly not ideal either
+						And that's what that looks like in the tool 
+						It's not bad but at higher densities you can definitly watch it grow as the density is changed 
 					</aside>
 				</section>
 
 				<section>
-					<h1></h1>
+					<img src="images/poisson_demo.webp">
 					<aside class="notes">
-						Dart throwing starts fast, but gets exponentially slower
-
-						Speeds always great but if you can't get something done in a single frame
-						(and if it's user controlled then it will be longer than a frame)
-						then you need to take into consideration how your algorithm looks as it develops
+						So what I've ended up with is a combination of both
 						
-						For this type of application
-						I prefer something that iteratively approaches a final result rather than something that
+						theres absolutely work I could do in optimizing my spatial acceleration structures but
+						far more usable.
+					</aside>
+				</section>
 
+				<section>
+					<h1>Other techniques and why they weren't suitable</h1>
+					<li>Pregenerated</li>
+					<li>Chunked</li>
+					<li>Rethrowing</li>
+					<li>Sample elimination</li>
+					<li>Ai probably</li>
+
+					<div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+						<img src="slideshow_images/blue-noise-sphere.gif" width="400px" height="auto">
+						<img src="slideshow_images/ai_paper.PNG" width="20%">
+						<img src="slideshow_images/poisson_paper.PNG" width="20%">
+					</div>
+
+					<aside class="notes">
+						Can't pregenerate because the density needs to be variable, 
+
+						rethrowing just 
+						
+						I like algorithms for this that iteratively approach a final result
+
+						Could possibly split it into multiple chunks and run on seperate threads and then do a merge pass 
+						but then when would the merging be done after the chunks are finished?
+					</aside>
+				</section>
+
+				<section>
+					<h1>Even More Ideas</h1>
+						<!--<img src="slideshow_images/buckets.gif" height="400px">-->
+						<img src="slideshow_images/lloyds_relaxation.webp" height=400px>
+					<aside class="notes">
+						In researching this I found Lloyd's relaxation which might actually be way nicer, 
+						it can start with a bunch of random points and then iteratively push them towards being more 
+						evenly spaced with some delaunay rules 
+
+						one of the things I like about the current method is that you can immediatly start rendering samples
+						as soon as a point is placed. But if your moving the points around that data would be incorrect. 
+
+						I think eventually 
+					</aside>
+				</section>
+
+				<section>
+
+					<img src="images/poisson_demo.webp">
+					<aside class="notes">
+						My general point with this is ideally everything would update instantly,
+						on the same frame it was changed so that you could see the results exactly.
+
+						But theres always going to be situtations where that's not practical
+						especially when your allowing users to add as many objects as they want 
+
+						so if that's 
+
+						then you need to take into consideration how your algorithm looks as it develops 
+						especially if it's the core of a program.
+
+						The worst thing is to have a delay before anything shows up on screen.
+
+						But even if your showing something theres still a broad range of 
+
+						
+						I prefer something that iteratively approaches a final result rather than something that
 
 						it's more important that you can approximate the final placement as quickly as possible
 						I would vastly prefer this over something else
 						even if this took longer
 						I'm always gonna vastly prefer something like this even if it were takes longer to reach full coverage
-
-
-						There's different 
-					</aside>
-				</section>
-				
-				<section>
-					<img src="images/poisson_demo.webp">
-					<aside class="notes">
-						And that's what it looks like now definitly not perfect 
-						theres absolutely work I could do in optimizing my spatial acceleration structures but
-						far more usable
 					</aside>
 				</section>
 
-<!-- MINIMIZING SIDE EFFECTS -->
-
-				<section>
-					<img src="slideshow_images/density_sideeffect.gif">
-					<aside class="notes">
-						As the density is changed, rotation is also affected like those points in the middle are 
-						clearly in the same spot visually and yet 
-					</aside>
-				</section>
-				<section>
-					 <pre><code data-trim data-noescape>
-						(def lazy-fib
-						(concat
-						[0 1]
-						((fn rfib [a b]
-						(lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
-					</code></pre>
-
-					<aside class="notes">
-						And this happens because I implemented it in the simplest way where
-						I reset all the points any time the density is modified, 
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						I actually inadvertenly solved this by making the rotation but you could imagine 
-						some more complicated system
-					</aside>
-				</section>
 
 <!-- GAME DESIGN ? -->
-
+<!--
 				<section>
-					<h1>Game Design</h1>
+					<h1>Open Design</h1>
 					<aside class="notes">
 						Another thing I was surprised by was just how many parralels I found between 
 						the thinking involved in software design and games
-
-						i guess it shouldn't be surprising
+						I guess it shouldn't be all that surprising but 
 
 						For example
 						One of my favourite ideas from game design is this idea of coverage of the space,
 						meaning like you've set the boundaries of what your game or tool or ___ can do and 
 						everything should have some interaction with everything else
 						even if not particularly useful or the result is weird
-						it's your job to still cover that part of the design space
-						or otherwise it can feel incomplete
 					</aside>
 				</section>
 
@@ -215,21 +270,21 @@
 						early on the controls looked like this.	
 					</aside>
 				</section>
-
+				
 				<section>
 					<img src="images/evolution_3.webp" width="60%">
 				</section>
 
 				<section>
-					Maximal expressiveness from the most minimal set of controls
-					<aside>
+					<h1> Maximal expressiveness from the most minimal set of controls.</h1>
+					<aside class="notes">
 						So in some way 
 						Like in games where your searching for 
+					
 						I guess in some sense you can determine the beauty of your software by 
 					</aside>
 				</section>
 
-<!-- BONUS TECHNICAL -->
 				<section>
 					<aside class="notes">
 						Early on I was like oh I'll add a different type of map that is direction values and then you can paint
@@ -237,17 +292,23 @@
 
 						But then it's like
 
+						it's your job to still cover that part of the design space
+						or otherwise it can feel incomplete
+
 						Often it costs nothing or very little to be more open with how it operates
 						and I guess the counter argument to all this would be well your adding extra options that don't really make sense
 					</aside>
 				</section>
+-->
 
+<!-- BONUS TECHNICAL -->
 				<section>
-					<h1>Bonus Technical Stuff</h1>
+					<h1>More stuff</h1>
 					<aside class="notes">
-						Heres a bunch of quickfire, mostly technical stuff that would have saved me time had I known it before
+						Heres a bunch of, mostly technical stuff that would have saved me time had I known it before
 					</aside>
 				</section>
+				
 				<section>
 					<h1>Debugging pixels</h1>
 					<img src="slideshow_images/texture_viewer.webp" width="60%">
@@ -260,6 +321,7 @@
 						1 pixel seams or ensure values are in a specific range. 
 					</aside>
 				</section>
+
 				<section>
 					<h1>Debugging pixels</h1>
 					<img src="slideshow_images/pixel_debugger.webp" width="70%">
@@ -271,15 +333,22 @@
 						of turning that on aswell
 					</aside>
 				</section>
+		
 				<section>
-					<h1>Strict about color spaces</h1>
+					<img src="slideshow_images/density_sideeffect.gif">
 					<aside class="notes">
-						While this didn't neccesarily save me much time on this project, it certainly got me thinking much more about what 
-						color space something was
-
-						Probably not worth the effort if your a pro, 
+						As the density is changed, rotation is also affected like those points in the middle are 
+						clearly in the same spot visually and yet 
+					
+						And this happens because I implemented it in the simplest way where
+						I reset all the points any time the density is modified, 
+					
+						I actually inadvertenly solved this by making the rotation but you could imagine 
+						some more complicated system
 					</aside>
 				</section>
+
+
 				<section>
 					<h1>Gradients!</h1>
 					<img src="slideshow_images/gradients.png" width = 80%>
@@ -293,64 +362,43 @@
 				<section>
 					<img src="slideshow_images/color_spaces.PNG" width = 80%>
 					<aside class="notes">
-						It quickly devolves into the craziest diagrams and terms you've ever seen
+						It quickly devolves into the craziest diagrams and terms you've ever seen,
+						which would make you think
 					</aside>
 				</section>
 				<section>
 					<h1>Gradients Are Easy</h1>
-					 <pre class="cpp"><code data-noescape data-line-numbers>
-					function Color lrgb_to_oklab(Color lrgb) {
-						const float l = 0.4122214708f * lrgb.x + 0.5363325363f * lrgb.y + 0.0514459929f * lrgb.z;
-							const float m = 0.2119034982f * lrgb.x + 0.6806995451f * lrgb.y + 0.1073969566f * lrgb.z;
-							const float s = 0.0883024619f * lrgb.x + 0.2817188376f * lrgb.y + 0.6299787005f * lrgb.z;
-
-						const float l_ = cbrtf( l );
-						const float m_ = cbrtf( m );
-						const float s_ = cbrtf( s );
-
-						return {
-						0.2104542553f * l_ + 0.7936177850f * m_ - 0.0040720468f * s_,
-						1.9779984951f * l_ - 2.4285922050f * m_ + 0.4505937099f * s_,
-						0.0259040371f * l_ + 0.7827717662f * m_ - 0.8086757660f * s_,
-						lrgb.a
-						};
-						}
-
-						function Color oklab_to_lrgb(Color oklab) {
-						const float l_ = oklab.x + 0.3963377774f * oklab.y + 0.2158037573f * oklab.z;
-						const float m_ = oklab.x - 0.1055613458f * oklab.y - 0.0638541728f * oklab.z;
-						const float s_ = oklab.x - 0.0894841775f * oklab.y - 1.2914855480f * oklab.z;
-
-						const float l = l_ * l_ * l_;
-						const float m = m_ * m_ * m_;
-						const float s = s_ * s_ * s_;
-
-						return {
-								+4.0767416621f * l - 3.3077115913f * m + 0.2309699292f * s,
-								-1.2684380046f * l + 2.6097574011f * m - 0.3413193965f * s,
-								-0.0041960863f * l - 0.7034186147f * m + 1.7076147010f * s,
-						oklab.a
-						};
-					}
-					</code></pre>
+					<img src="slideshow_images/gradient_code.PNG">
 					<p>https://bottosson.github.io/posts/oklab/</p>
 					<aside class="notes">
-						It's like 40 lines at most, just copy it in and move on 
-
-						but at minimum if your making a creative software with gradients
-						you have no excuse to not atleast support hsv and some perceptual color space other than srgb
+						It's like 40 lines at most just copy it in and move on 
 						there's more advanced shit for sure, if you really want to get into it
-						but 
+						but at minimum if your making a creative software with gradients
+						you have no excuse to not atleast support hsv and some perceptual color space other than srgb.
 					</aside>
 				</section>
+				<section>
+					<h1>Strict about color spaces</h1>
 
+					<img src="slideshow_images/code.PNG">
+
+					<aside class="notes">
+						Another thing that helped me to make color stuff even easier was being strict about color spaces
+
+						While this didn't neccesarily save me much time on this project, 
+						it certainly got me thinking much more about
+						well I've imported this file with stb_image so it's gonna have some
+						color space something was
+
+						Probably not worth the effort if your a pro, just have 
+					</aside>
+				</section>
 <!-- END QUESTION -->
 				<section>
-					<h1>Decal Rendering?</h1>
+					<h1>Decal rendering open question</h1>
 					<img src="slideshow_images/ugly_decal_rendering.PNG" width="80%">
 					<aside class="notes">
 						The uv seams are still clearly visible and thats 
-
 						So here's my open question to end it on, I'm not really sure how to render the decals.
 						In this type of software currently I'm just drawing a bunch of quad instances in a seperate 
 						pass onto a render target that is then used to texture the mesh
@@ -359,7 +407,7 @@
 
 				<section>
 					<h1>Deferred?</h1>
-					<img src="https://mtnphil.wordpress.com/wp-content/uploads/2014/05/box.png"
+					<img src="https://mtnphil.wordpress.com/wp-content/uploads/2014/05/box.png">
 					<aside class="notes">
 						Sometype of deferred screenspace solution wether in a
 						fully deferred or forward+ pipeline
@@ -405,11 +453,6 @@
 						but often only seem to handle cases where your projecting one texture at at a time
 						which obviously wouldn't work if you had to loop through and do that same process 100 thousand times.
 					</aside>
-				</section>
-
-				<section>
-					<h1>Questions ideas etc</h1>
-					
 				</section>
 			</div>
 

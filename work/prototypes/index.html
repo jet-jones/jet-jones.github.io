@@ -8,106 +8,127 @@
 <div class="everything">
 
 <h1> Plant Game</h1>
+<div style="display: flex; align-items: flex-start; justify-content: center;">
+<div>
 
-<h2>Controls</h2>
-<p>
-Mouse to look around
-WASD to move
-Space to jump
-E to interact with objects
-M to open the map
-Right click to place plants
-1, 2, 3 … to select inventory slots
-F1 to enable the commentary nodes
-</p>
+    <p>
+        Exploration of open world puzzle design, and pushing the limits of player freedom.
+    </p>
+
+    <h2>Controls</h2>
+    <p>
+    Mouse to look around<br>
+    WASD to move<br>
+    Space to jump<br>
+    E to interact with objects<br>
+    M to open the map<br>
+    Right click to place plants<br>
+    1, 2, 3 … to select inventory slots<br>
+    F1 to enable the commentary nodes<br>
+    </p>
 
 <a href="https://jet-j.itch.io/plant-game" class="big_link">Download (has commentary)</a>
 
+</div>
+<iframe width="800px" height="280" src="https://www.youtube.com/embed/_Wj4UbMMrzs?si=ni2-ZdmWGZmGw1Ky" allowfullscreen></iframe>
+</div>
+
 <h2>Development</h2>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_Wj4UbMMrzs?si=ni2-ZdmWGZmGw1Ky" allowfullscreen></iframe>
 
 <div style="display: flex; align-items: flex-start; justify-content: center;">
-<p>
-I’d made a system a while ago for doing 3d tile-based games in unreal but never ended 
-up using it for anything, I had also realized that I could make levels quickly with the 
-cube grid modelling tools that I had enjoyed using last time if I found a way to convert 
-them to tiles. Since the brief was so open, forcing it to be something tile based helped to 
-restrict the prototyping phase. I started with some early experimentation with moving 
-around very large tiles, but this was too similar to another game I’d made.  
-Eventually the prototypes developed 
-into more of a Spelunky type thing, 
-where there’s a bunch of objects with 
-unique properties and you use items 
-on the objects in different ways to get 
-coins and complete the level. I tried a 
-bunch of different stuff here but was 
-struggling to make the interactions 
-interesting without very specific 
-setups. I think it’s just because I 
-wasn’t particularly used to this type 
-of design, randomizing the levels 
-earlier on might have helped to have interesting combinations arising naturally rather 
-than hand placing everything. I would still like to try a game like this at some point, but 
-it was already halfway through the term, so I decided to switch to something I was more 
-familiar with. 
-One of the item types I developed for the Spelunky prototype was a fungus that would 
-slowly grow to fill the space, I then made more versions of the same object that grew in 
-lines, or a flat plane and I was finding it fun 
-to just move around on these dynamic 
-structures that you could place anywhere. So, 
-I took the plants into a new project and got 
-rid of everything else except the inventory 
-system and started trying to make interesting 
-obstacle courses to navigate around   
-This soon turned into more puzzly kinds of 
-levels where you must combine 2 or 3 plants 
-in a more specific configuration to get across 
-a gap. A lot of the first ones I found were 
-quite complicated but eventually I had a set 
-of 15ish pretty fun levels with a nice range of 
-difficulties.  
-I then started to combine them into a shared 
-open environment which introduced a bunch 
-of challenges, primarily ensuring that the 
-player couldn’t easily cheat their way out of 
-the level by stacking plants on top of other 
-plants. At first, I tried a decay system where 
-plants would eventually disappear after a few 
-seconds, but it added unnecessary timing to 
-the challenges and the seeds had to be on a 
-timer as well. It also required things to be 
-spread out more so that you couldn’t grab 
-plants from one section and use them in 
-other while the placed plants were still 
-decaying. After several other ideas, I decided 
-on the inventory approach. I’m still not 
-entirely happy with it but it was the least bad 
-option.
-</p>
+    <div>
+        <p>
+            I’d made a system a while ago for doing 3d tile-based games in unreal but never ended 
+            up using it for anything, since the brief was so open forcing it to be something tile based helped to 
+            restrict the prototyping phase. I started with some early experimentation with moving 
+            around very large tiles, but this was too similar to another game I’d made.  
+            Eventually the prototypes developed into more of a Spelunky type thing, 
+            where there’s a bunch of objects with unique properties and you use items 
+            on the objects in different ways to get coins and complete the level. I tried a 
+            bunch of different stuff here but was struggling to make the interactions 
+            interesting without very specific setups. I think it’s just because I 
+            wasn’t particularly used to this type of design, randomizing the levels 
+            earlier on might have helped to have interesting combinations arising naturally rather 
+            than hand placing everything. I would still like to try a game like this at some point, but 
+            it was already halfway through the time alloted for the game, so I decided to switch to something I was more
+            familiar with.
+        </p>
+        <p>
+            One of the item types I developed for the Spelunky prototype was a fungus that would 
+            slowly grow to fill the space, I then made more versions of the same object that grew in 
+            lines, or a flat plane and I was finding it fun to just move around on these dynamic 
+            structures that you could place anywhere. So, I took the plants into a new project and got 
+            rid of everything else except the inventory system and started trying to make interesting 
+            obstacle courses to navigate around This soon turned into more puzzly kinds of 
+            levels where you must combine 2 or 3 plants in a more specific configuration to get across 
+            a gap. A lot of the first ones I found were quite complicated but eventually I had a set 
+            of 15ish pretty fun levels with a nice range of difficulties. I then started to combine them into a shared 
+            open environment which introduced a bunch of challenges, primarily ensuring that the 
+            player couldn’t easily cheat their way out of the level by stacking plants on top of other 
+            plants. At first, I tried a decay system where plants would eventually disappear after a few 
+            seconds, but it added unnecessary timing to the challenges and the seeds had to be on a 
+            timer as well. It also required things to be spread out more so that you couldn’t grab 
+            plants from one section and use them in other while the placed plants were still 
+            decaying. After several other ideas, I decided on the inventory approach. I’m still not 
+            entirely happy with it but it was the least bad option.
+        </p>
+        <p>
+            Overall this project taught me a lot about trying to have multiple distinct puzzles in the same game space,
+            and why it's not really worth it if that's not going to be the focus of the game. If I were to expand this game
+            or doing something similar one of the first things I would want to put in, is someway of visualizing what areas
+            are accessible from where the player is standing this would have avoided many of the errors that ended up in the 
+            prototype.
+        </p>
+    </div>
 <div>
-<img src="images/spelunky.webp" width="3000px">
-<img src="images/levels_early.webp" width="3000px">
-<img src="images/levels_later.webp" width="3000px">
+<img src="images/spelunky.webp" width="2000px">
+<img src="images/levels_early.webp" width="2000px">
+<img src="images/levels_later.webp" width="2000px">
 </div>
 </div>
 
 <hr>
 
-<h1>Water Game</h1>
+<h1>Water's Edge</h1>
+<div style="display: flex; align-items: flex-start; justify-content: center;">
+    <div>
+    <p >
+        Simple prototype of a game where you can 
+    control the height of water with the mouse wheel.
+    The first level introduces the mechanic and 
+    how it interacts with buttons and crates, 
+    aswell as standing on things to float. The 
+    second level expands the mechanic with two 
+    different bodies of water that can be controlled independently, 
+    the third shows crates stacked on top of each other and the fourth is 
+    about more complicated interactions. 
+    </p>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qvNZXB0HGSQ?si=Ixr_a6-mhwLC9pU0" allowfullscreen></iframe>
+    <p>
+        The core idea is solid, and expanding to support multiple areas of water was a good
+        way to increase the ceiling for complexity a lot without introducing more arbitrary systems.
 
+        Just difficult to communicate where buttons are 
+        maybe this is something that would work better in 2d.
+
+    </p>
+    </div>
+    <iframe style="margin-left: 20px;" width="4000px" height="315" src="https://www.youtube.com/embed/qvNZXB0HGSQ?si=Ixr_a6-mhwLC9pU0" allowfullscreen></iframe>
+</div>
 <hr>
 
 <h1>Fibrous</h1>
 <div style="display: flex; justify-content: space-between;">
     <div>
     <p>
-        Made for a 48 hour game jam in 2022, the theme was roots.
+        Made for a 48 hour game jam in 2023, the theme was roots.
+        Probably more happy with it aesthetically, in the way it clearly communicates the rules through simple shapes. 
+        But the gameplay was too unfocused to be interesting, the branching thing is just sort of added on to another game 
+        about the topology of objects.
     </p>
     <p>
-        <a href="https://jet-j.itch.io/fibrous">Download Here</a>
+        <a href="https://jet-j.itch.io/fibrous">Download Here (May be broken)</a>
     </p>
     </div>
     <video src="images/fibrous_gameplay.webm" autoplay loop width="400px"></video>
